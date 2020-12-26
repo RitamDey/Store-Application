@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class StoreController extends Controller {
     /**
@@ -33,5 +35,13 @@ class StoreController extends Controller {
     public function new_products() {
         $latest_five = Products::query()->orderByDesc('created_at')->get();
         return view('store.index', [ "products" => $latest_five ]);
+    }
+
+    /**
+     * Display the current users cart
+     * @return \Illuminate\Contracts\View\View|Redirect
+     */
+    public function cart_view() {
+        $user = Auth::user();
     }
 }
