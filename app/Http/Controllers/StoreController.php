@@ -32,6 +32,8 @@ class StoreController extends Controller {
      */
     public function new_products() {
         $latest_five = Products::query()->orderByDesc('created_at')->get();
-        return view('welcome', [ "products" => $latest_five ]);
+        return view('store.index', [ "products" => $latest_five ]);
+    }
+
     }
 }
