@@ -7,7 +7,6 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
     <title> The Quick Store</title>
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -23,11 +22,9 @@
             }
         }
     </style>
-
-
 </head>
 <body>
-
+{{--@include("components.navbar")--}}
 <header>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
@@ -59,15 +56,20 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
+            <a href="{{ @route("store.index") }}" class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                      stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
                      viewBox="0 0 24 24">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
                 </svg>
-                <strong> The Quick Store</strong>
+                <strong> The Quick Store </strong>
             </a>
+
+            <ul class="navbar navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
