@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\StoreController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get("/", [StoreController::class, 'index'])->name("store.index");
+Route::get("/new-products", [StoreController::class, 'new_products'])->name("store.new_products");
+Route::get('/product/{id}', [StoreController::class, 'show'])->name("store.product");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
