@@ -23,7 +23,7 @@ class StoreController extends Controller {
         Log::debug("Requested $storeItems");
         // Use the requested ID to find the product
         $item = Products::query()->find($storeItems);
-        return view('product', [ "product" => $item ]);
+        return view('store.details', [ "product" => $item ]);
     }
 
     /**
@@ -33,7 +33,5 @@ class StoreController extends Controller {
     public function new_products() {
         $latest_five = Products::query()->orderByDesc('created_at')->get();
         return view('store.index', [ "products" => $latest_five ]);
-    }
-
     }
 }
