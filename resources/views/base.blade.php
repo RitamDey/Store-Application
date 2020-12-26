@@ -41,7 +41,7 @@
                         @auth
                             <li><a href="{{ @route('dashboard') }}"
                                    class="text-white">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a></li>
-                            <li><a href="#" class="text-white">View Cart</a></li>
+                            <li><a href="{{ @route('user.cart') }}" class="text-white">View Cart</a></li>
                             <li><a href="#" class="text-white">View Wishlist</a></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
