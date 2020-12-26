@@ -39,15 +39,19 @@
                             <li><a href="#" class="text-white">Email me</a></li>
                         @endguest
                         @auth
-                            <li><a href="{{ @route('dashboard') }}" class="text-white">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a></li>
+                            <li><a href="{{ @route('dashboard') }}"
+                                   class="text-white">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a></li>
                             <li><a href="#" class="text-white">View Cart</a></li>
                             <li><a href="#" class="text-white">View Wishlist</a></li>
-                            <li><form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <a href="{{ @route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-                                    </form></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ @route('logout') }}"
+                                       onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                </form>
+                            </li>
                         @endauth
                     </ul>
                 </div>
@@ -92,6 +96,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
