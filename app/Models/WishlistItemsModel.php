@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class WishlistItemsModel extends Model {
     use HasFactory;
 
-    protected $attributes = [
-        "id",
-        "description",
-        "user_id",
-        "created_at",
-        "updated_at"
+    const CREATED_AT = "added_at";
+
+    protected $primaryKey = "wishlist_id";
+    protected $fillable = [
+        "wishlist_id",
+        "product_id"
     ];
     protected $guarded = [
-        "id",
-        "created_at",
-        "updated_at"
+        "added_at"
     ];
-    protected $fillable = [
-        "description",
-        "user_id"
+    protected $attributes = [
+        "wishlist_id",
+        "product_id",
+        "added_at"
     ];
+    public $timestamps = false;
 }
