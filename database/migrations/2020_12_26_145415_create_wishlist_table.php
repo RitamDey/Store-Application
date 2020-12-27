@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Schema;
 class CreateWishlistTable extends Migration {
     /**
      * Run the migrations.
-     *
      * @return void
      */
     public function up() {
@@ -21,6 +20,17 @@ class CreateWishlistTable extends Migration {
             $table->foreign("user_id")->references("id")->on("users")
                   ->cascadeOnDelete()->cascadeOnUpdate();
         });
+
+        Schema::create('wishlist_items', function (Blueprint $table) {
+            $table->unsignedBigInteger("wishlist_id");
+            $table->unsignedBigInteger("product_id");
+            $table->timestamp("added_at")->useCurrent();
+
+            $table->foreign("wishlist_id")->references("id")->on("wishlist")
+                  ->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign("product_id")->references("id")->on("products")
+                  ->cascadeOnUpdate()->cascadeOnDelete();
+        });
     }
 
     /**
@@ -30,5 +40,6 @@ class CreateWishlistTable extends Migration {
      */
     public function down() {
         Schema::dropIfExists('wishlist');
+        Schema::dropIfExists('wishlist_items');
     }
 }
