@@ -58,4 +58,31 @@ class StoreController extends Controller {
 
         return view("store.cart", ["products" => $query, "total" => $cost]);
     }
+
+    /**
+     * Handle the checkout GET request. Shows all the products the user would place a order for
+     * @return \Illuminate\Contracts\View\View|Redirect
+     */
+    public function checkout_view() {
+        $user_id = Auth::id();
+        Log::debug("Fetching and rendering the final cart for $user_id");
+
+        $query = DB::table("cart")->join($table="products", $first="products.id", "=", "cart.product_id")
+            ->select(["user_id", "product_id", "name", "price", "quantity"])
+            ->where("user_id", "=", $user_id)->get();
+
+        $cost = $query->reduce(function ($sum, $element) {
+            return $sum + ($element->price * $element->quantity);
+        }, 0);
+
+        return view("store.checkout", ["products" => $query, "total" => $cost]);
+    }
+
+    /**
+     * Handle the checkout POST request. Handles the creation of bill and shows the confirmation page
+     * @return \Illuminate\Contracts\View\View|Redirect
+     */
+    public function checkout_make() {
+        return "Under construction";
+    }
 }
