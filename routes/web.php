@@ -18,6 +18,9 @@ Route::get("/new-products", [StoreController::class, 'new_products'])->name("sto
 Route::get('/product/{id}', [StoreController::class, 'show'])->name("store.product");
 Route::get("/my-cart", [StoreController::class, "cart_view"])
      ->middleware("auth")->name("user.cart");
+Route::get("/checkout", function (\Illuminate\Http\Request $request) {
+    return "welcome $request->ip()";
+})->middleware("password.confirm")->name("user.checkout");
 
 Route::get('/dashboard', function () {
     return view('dashboard', ["products" => [], "total_item" => 0]);

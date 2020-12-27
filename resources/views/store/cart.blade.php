@@ -64,7 +64,7 @@
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle"><strong>{{ $total }}</strong></td>
-                                    <td class="border-0 align-middle"><a href="#" class="btn btn-primary">Checkout</a></td>
+                                    <td class="border-0 align-middle"><a href="{{ @route('user.checkout') }}" class="btn btn-primary">Checkout</a></td>
                                 </tr>
                                 </tbody>
                             </table>
