@@ -34,7 +34,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{ $total_item = 0 }}
                                 @foreach($products as $product)
                                 <tr>
                                     <th scope="row" class="border-0">
@@ -49,7 +48,6 @@
                                     <td class="border-0 align-middle"><strong>Rs {{ $product->price }}</strong></td>
                                     <td class="border-0 align-middle"><strong>{{ $product->quantity }}</strong></td>
                                     <td class="border-0 align-middle"><strong>{{ $product->price * $product->quantity }}</strong></td>
-                                    {{ $total_item += $product->price * $product->quantity }}
                                     <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 @endforeach
@@ -65,7 +63,7 @@
                                     </th>
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle"></td>
-                                    <td class="border-0 align-middle"><strong>{{ $total_item }}</strong></td>
+                                    <td class="border-0 align-middle"><strong>{{ $total }}</strong></td>
                                     <td class="border-0 align-middle"><a href="#" class="btn btn-primary">Checkout</a></td>
                                 </tr>
                                 </tbody>

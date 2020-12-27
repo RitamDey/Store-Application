@@ -44,11 +44,18 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function cart_view() {
-        $user = Auth::user();
+        $user_id = Auth::id();
+        Log::debug("Fetching and rendering cart for $user_id");
+
         $query = DB::table("cart")->join($table="products", $first="products.id", "=", "cart.product_id")
             ->select(["user_id", "product_id", "name", "price", "quantity"])
-            ->where("user_id", "=", Auth::id())->get();
+            ->where("user_id", "=", $user_id)->get();
 
-        return view("store.cart", ["products" => $query]);
+        $cost = $query->reduce(function ($sum, $element) {
+            return $sum + ($element->price * $element->quantity);
+        }, 0);
+
+
+        return view("store.cart", ["products" => $query, "total" => $cost]);
     }
 }
