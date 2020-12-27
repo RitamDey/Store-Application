@@ -20,7 +20,7 @@ Route::get("/my-cart", [StoreController::class, "cart_view"])
      ->middleware("auth")->name("user.cart");
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', ["products" => [], "total_item" => 0]);
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
