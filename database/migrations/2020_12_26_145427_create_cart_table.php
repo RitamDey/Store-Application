@@ -18,8 +18,11 @@ class CreateCartTable extends Migration {
             $table->timestamp("updated_at")->useCurrent();
             $table->smallInteger('quantity')->default(1);
 
-            $table->foreign("user_id")->references('id')->on('users');
-            $table->foreign("product_id")->references("id")->on("products");
+            $table->foreign("user_id")->references('id')->on('users')
+                  ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("product_id")->references("id")->on("products")
+                  ->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->primary(['product_id', 'user_id']);
         });
     }
