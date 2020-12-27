@@ -17,9 +17,16 @@
                 <p>{{ $product->description }}</p> <br/>
                 <h3> Rs. {{ $product->price }}</h3>
 
-                <form method="POST" id="cart-form">
-                    @csrf
-                    <input type="submit" value="Add to Cart">
+                <button class="btn btn-primary" id="add-to-cart" value="{{ $product->id }}"> Add to cart </button>
+                <hr/>
+                <form id="wishlist-form">
+                    <input type="hidden" value="{{ $product->id }}">
+                    <label for="wishlist"></label>
+                    <select name="wishlist" id="wishlist">
+                        <option value="default">Default</option>
+                        <option value="funky">Funky</option>
+                    </select>
+                    <input type="submit" value="Add to wishlist" class="btn btn-secondary">
                 </form>
             </div>
         </div>
