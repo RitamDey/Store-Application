@@ -33,11 +33,6 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
-                        @guest
-                            <li><a href="{{ @route('login') }}" class="text-white">Login</a></li>
-                            <li><a href="{{ @route('register') }}" class="text-white">Register</a></li>
-                            <li><a href="#" class="text-white">Email me</a></li>
-                        @endguest
                         @auth
                             <li><a href="{{ @route('dashboard') }}"
                                    class="text-white">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a></li>
@@ -70,14 +65,20 @@
                 <strong> The Quick Store </strong>
             </a>
 
+            <a href="{{ @route("store.new_products") }}"> See new products first </a>
+
+            @guest
             <ul class="navbar navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="{{ @route('register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="{{ @route('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
+            @endguest
+            @auth
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            @endauth
         </div>
     </div>
 </header>
