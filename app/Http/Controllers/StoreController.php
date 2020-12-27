@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartModel;
 use App\Models\Products;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
@@ -43,5 +45,10 @@ class StoreController extends Controller {
      */
     public function cart_view() {
         $user = Auth::user();
+        $query = DB::table("cart")->join($table="products", $first="products.id", "=", "cart.product_id")
+            ->select(["user_id", "product_id", "name", "price", "quantity"])
+            ->where("user_id", "=", Auth::id())->get();
+
+        return view("store.cart", ["products" => $query]);
     }
 }
