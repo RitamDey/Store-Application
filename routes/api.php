@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-Route::middleware("auth:api")->get("/products", function (Request $request) {
+Route::get("/products", function (Request $request) {
     return \App\Models\Products::all()->toJson();
 });
