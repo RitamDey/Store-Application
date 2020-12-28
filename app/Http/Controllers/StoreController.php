@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\Bill;
+use App\Models\BillItems;
+use App\Models\CartModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -62,10 +65,24 @@ class StoreController extends Controller {
     }
 
     /**
+     * Helper functions to check if the cart is empty or nor
+    **/
+    private function cart_empty() {
+        $user = Auth::user()->id;
+        $cart_count = CartModel::where("user_id", $user)->count();
+
+        return $cart_count < 1;
+    }
+
+    /**
      * Display the current users cart
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function cart_view() {
+        // Check if the cart is empty or not. If it's empty then show a empty cart screen
+        if ($this->cart_empty())
+            return view("store.empty_cart");
+        
         return view("store.cart", $this->get_cart());
     }
 
@@ -74,6 +91,10 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function checkout_view() {
+        // Check if the cart is empty or not. If it's empty then show a empty cart screen
+        if ($this->cart_empty())
+            return view("store.empty_cart");
+
         return view("store.checkout", $this->get_cart());
     }
 
