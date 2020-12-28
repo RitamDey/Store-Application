@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartModel;
 use App\Models\Products;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -44,19 +45,23 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function cart_view() {
-        $user_id = Auth::id();
-        Log::debug("Fetching and rendering cart for $user_id");
+        $cart_items = Auth::user()->cart_items;
+        $cart_info = collect();
+        $total = 0.0;
 
-        $query = DB::table("cart")->join($table="products", $first="products.id", "=", "cart.product_id")
-            ->select(["user_id", "product_id", "name", "price", "quantity"])
-            ->where("user_id", "=", $user_id)->get();
+        foreach ($cart_items as $cart_item) {
+            $product = collect([
+                "id" => $cart_item->product_id,
+                "name" => $cart_item->product->name,
+                "price" => $cart_item->product->price,
+                "quantity" => $cart_item->quantity,
+                "item_total" => $cart_item->quantity * $cart_item->product->price
+            ]);
+            $cart_info->push($product);
+            $total += $product->get('item_total');
+        }
 
-        $cost = $query->reduce(function ($sum, $element) {
-            return $sum + ($element->price * $element->quantity);
-        }, 0);
-
-
-        return view("store.cart", ["products" => $query, "total" => $cost]);
+        return view("store.cart", ["products" => $cart_info, "total" => $total]);
     }
 
     /**
@@ -64,18 +69,23 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function checkout_view() {
-        $user_id = Auth::id();
-        Log::debug("Fetching and rendering the final cart for $user_id");
+        $cart_items = Auth::user()->cart_items;
+        $cart_info = collect();
+        $total = 0.0;
 
-        $query = DB::table("cart")->join($table="products", $first="products.id", "=", "cart.product_id")
-            ->select(["user_id", "product_id", "name", "price", "quantity"])
-            ->where("user_id", "=", $user_id)->get();
+        foreach ($cart_items as $cart_item) {
+            $product = collect([
+                "id" => $cart_item->product_id,
+                "name" => $cart_item->product->name,
+                "price" => $cart_item->product->price,
+                "quantity" => $cart_item->quantity,
+                "item_total" => $cart_item->quantity * $cart_item->product->price
+            ]);
+            $cart_info->push($product);
+            $total += $product->get('item_total');
+        }
 
-        $cost = $query->reduce(function ($sum, $element) {
-            return $sum + ($element->price * $element->quantity);
-        }, 0);
-
-        return view("store.checkout", ["products" => $query, "total" => $cost]);
+        return view("store.checkout", ["products" => $cart_info, "total" => $total]);
     }
 
     /**

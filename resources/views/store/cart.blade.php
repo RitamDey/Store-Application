@@ -40,14 +40,14 @@
                                         <div class="p-2">
                                             <div class="ml-3 d-inline-block align-middle">
                                                 <h5 class="mb-0">
-                                                    <a href="{{ @route("store.product", $product->product_id) }}" class="text-dark d-inline-block align-middle">{{ $product->name }}</a>
+                                                    <a href="{{ @route("store.product", $product->get("id")) }}" class="text-dark d-inline-block align-middle">{{ $product->get('name') }}</a>
                                                 </h5>
                                             </div>
                                         </div>
                                     </th>
-                                    <td class="border-0 align-middle"><strong>Rs {{ $product->price }}</strong></td>
-                                    <td class="border-0 align-middle"><strong>{{ $product->quantity }}</strong></td>
-                                    <td class="border-0 align-middle"><strong>{{ $product->price * $product->quantity }}</strong></td>
+                                    <td class="border-0 align-middle"><strong>Rs {{ $product->get('price') }}</strong></td>
+                                    <td class="border-0 align-middle"><strong>{{ $product->get('quantity') }}</strong></td>
+                                    <td class="border-0 align-middle"><strong>{{ $product->get('item_total') }}</strong></td>
                                     <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 @endforeach
