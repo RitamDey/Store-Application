@@ -18,10 +18,5 @@ class WishlistItemsModel extends Model {
     protected $guarded = [
         "added_at"
     ];
-    protected $attributes = [
-        "wishlist_id",
-        "product_id",
-        "added_at"
-    ];
     public $timestamps = false;
 }

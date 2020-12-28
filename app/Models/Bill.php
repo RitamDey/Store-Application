@@ -9,11 +9,8 @@ class Bill extends Model {
     use HasFactory;
 
     protected $attributes = [
-        "id",
-        "user",
-        "total_cost",
-        "total_items",
-        "created_at"
+        "total_cost" => 0,
+        "total_items" => 0,
     ];
     protected $guarded = [
         "id",
