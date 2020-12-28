@@ -14,5 +14,20 @@ class CartModel extends Model {
         "user_id",
         "quantity"
     ];
-    protected $primaryKey = ["product_id", "user_id"];
+
+    /**
+     * Indicate that the Cart model belongs to a certain user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
+
+    /**
+     * Indicate that the Cart model belongs has certain product
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product() {
+        return $this->belongsTo(Products::class, "product_id", "id");
+    }
 }
