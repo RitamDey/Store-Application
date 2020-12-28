@@ -38,10 +38,10 @@ class StoreController extends Controller {
     }
 
     /**
-     * Display the current users cart
-     * @return \Illuminate\Contracts\View\View|Redirect
-     */
-    public function cart_view() {
+     * Helper function to get every item from a user's cart, prepare necessary info and create a collection
+     * @return \array
+    **/
+    private function get_cart() {
         $cart_items = Auth::user()->cart_items;
         $cart_info = collect();
         $total = 0.0;
@@ -58,7 +58,15 @@ class StoreController extends Controller {
             $total += $product->get('item_total');
         }
 
-        return view("store.cart", ["products" => $cart_info, "total" => $total]);
+        return [ "products" => $cart_info, "total" => $total ];
+    }
+
+    /**
+     * Display the current users cart
+     * @return \Illuminate\Contracts\View\View|Redirect
+     */
+    public function cart_view() {
+        return view("store.cart", $this->get_cart());
     }
 
     /**
@@ -66,23 +74,7 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function checkout_view() {
-        $cart_items = Auth::user()->cart_items;
-        $cart_info = collect();
-        $total = 0.0;
-
-        foreach ($cart_items as $cart_item) {
-            $product = collect([
-                "id" => $cart_item->product_id,
-                "name" => $cart_item->product->name,
-                "price" => $cart_item->product->price,
-                "quantity" => $cart_item->quantity,
-                "item_total" => $cart_item->quantity * $cart_item->product->price
-            ]);
-            $cart_info->push($product);
-            $total += $product->get('item_total');
-        }
-
-        return view("store.checkout", ["products" => $cart_info, "total" => $total]);
+        return view("store.checkout", $this->get_cart());
     }
 
     /**
@@ -90,6 +82,5 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function checkout_make() {
-        return "Under construction";
     }
 }
