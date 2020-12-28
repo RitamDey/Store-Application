@@ -103,5 +103,37 @@ class StoreController extends Controller {
      * @return \Illuminate\Contracts\View\View|Redirect
      */
     public function checkout_make() {
+        // Fetch the user model
+        $user = Auth::user();
+        // Create a entry for the new bill. We do this because we will need the id to add bill items
+        $bill = Bill::create([ "user" => $user->id ]);
+        $cart_items = $user->cart_items;
+        $total_items = 0;
+        $total_cost = 0.0;
+
+        /**
+         * Iterate over each cart items, get their product id, their required quanitity
+         * Once fetched, create and save a bill item with the the bill_id set to the current bill
+         * After this, update the running count of items purchased and the total cost of the bill
+        **/
+        foreach ($cart_items as $cart_item) {
+            $bill_item = BillItems::create([
+                "bill_id" => $bill->id,
+                "product_id" => $cart_item->product_id,
+                "quantity" => $cart_item->quantity
+            ]);
+            $total_items += $cart_item->quantity;
+            $total_cost += $cart_item->quantity * $cart_item->product->price;
+        }
+
+        // We've everything in place, update the field in the model and save it in DB
+        $bill->total_cost = $total_cost;
+        $bill->total_items = $total_items;
+        $bill->save();
+
+        // Now delete the entire cart of the user and show the order placed message
+        CartModel::where("user_id", $user->id)->delete();
+
+        return view("store.order_placed", [ "order_id" => $bill->id ]);
     }
 }
