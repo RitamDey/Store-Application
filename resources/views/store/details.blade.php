@@ -33,4 +33,22 @@
         <!-- /.row -->
     </div>
     <!-- /.container -->
+
+    <script>
+        $("#add-to-cart").on("click", function (event) {
+            $.ajax("/api/user", function (data) {
+                console.log(data["name"])
+            })
+        });
+
+        $("#wishlist-form").on("submit", function (event) {
+            event.preventDefault();
+            // Get the selected wishlist
+            let wishlist = $("#wishlist option:selected").val()
+            console.log(wishlist)
+            // Get the product id
+            let item = $("#wishlist-form > input:hidden").val()
+            console.log(item)
+        });
+    </script>
 @endsection

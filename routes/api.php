@@ -23,3 +23,8 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 Route::get("/products", function (Request $request) {
     return \App\Models\Products::all()->toJson();
 });
+
+
+Route::middleware('auth')->prefix("/wishlist")->group(function() {
+    Route::get("/get", [WishlistController::class, "index"])->name("user.wishlists");
+});
