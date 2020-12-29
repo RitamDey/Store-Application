@@ -14,7 +14,18 @@ class WishlistController extends Controller {
     public function index() {
         $user = Auth::user();
 
-        return $user->toJson();
+        /**
+         * This method takes each of the avaliable wishlist model, extracts the id and name
+         * And then creates a <option> element for the frontend
+        **/
+        $extract = function($item, $key) {
+            $key = $item->id;
+            $name = $item->name;
+            return "<option value=$key>$name</option>";
+        };
+        
+        // Fetch all the wishlist, apply the function on everyone of them and then join them in a string
+        return $user->wishlists->map($extract)->join("\n");
     }
 
     /**

@@ -22,10 +22,7 @@
                 <form id="wishlist-form">
                     <input type="hidden" value="{{ $product->id }}">
                     <label for="wishlist"></label>
-                    <select name="wishlist" id="wishlist">
-                        <option value="default">Default</option>
-                        <option value="funky">Funky</option>
-                    </select>
+                    <select name="wishlist" id="wishlist"></select>
                     <input type="submit" value="Add to wishlist" class="btn btn-secondary">
                 </form>
             </div>
@@ -57,5 +54,12 @@
             let item = $("#wishlist-form > input:hidden").val()
             console.log(item)
         });
+
+        {{--
+            This function waits till the document is completely loaded and then fetches the user's wishlist
+        --}}
+        $(document).ready(function() {
+            $("#wishlist").load("{{ @route("user.wishlists") }}")
+        })
     </script>
 @endsection
