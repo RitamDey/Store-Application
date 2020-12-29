@@ -19,4 +19,14 @@ class WishlistItemsModel extends Model {
         "added_at"
     ];
     public $timestamps = false;
+
+
+    /**
+     * Denotes the relation b/w WishlistItems model and Wishlist model
+     * Using this method, a caller can get the wishlist to which this entry belongs
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    **/
+    public function wishlist() {
+        return $this->belongsTo(WishlistModel::class, "wishlist_id", "id");
+    }
 }
