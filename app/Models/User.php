@@ -59,4 +59,13 @@ class User extends Authenticatable {
     public function bills(): HasMany {
         return $this->hasMany(Bill::class, "user");
     }
+
+    /**
+     * Denotes the One-To-Many relationship b/w Wishlist model and a User
+     * This function allows the caller to fetch the entire wishlists in one call
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wishlists(): HasMany {
+        return $this->hasMany(WishlistModel::class, "user_id");
+    }
 }
