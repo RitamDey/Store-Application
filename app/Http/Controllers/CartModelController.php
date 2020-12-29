@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CartModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CartModelController extends Controller {
     /**
@@ -11,8 +13,21 @@ class CartModelController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        //
+    public function create(Request $request) {
+        $user = Auth::user()->id;
+        $validated = $request->validate([
+            "product" => "required|integer"
+        ]);
+        $product = intval($validated["product"]);
+        Log::debug("Adding $product for $user");
+
+        $item = CartModel::create([
+            "product_id" => $product,
+            "user_id" => $user,
+            "quantity" => 1
+        ]);
+
+        return $item->toJson();
     }
 
     /**

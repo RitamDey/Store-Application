@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CartModelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,9 @@ Route::get("/products", function (Request $request) {
 
 Route::middleware('auth')->prefix("/wishlist")->group(function() {
     Route::get("/get", [WishlistController::class, "index"])->name("user.wishlists");
+});
+
+
+Route::middleware('auth')->prefix("/cart")->group(function() {
+    Route::post("/add", [CartModelController::class, "create"])->name("cart.add");
 });

@@ -36,8 +36,15 @@
 
     <script>
         $("#add-to-cart").on("click", function (event) {
-            $.ajax("/api/user", function (data) {
-                console.log(data["name"])
+            let product = this.value
+            $.post({
+                url: "{{ @route("cart.add") }}",
+                data: { "product": product },
+                dataType: "json"
+            }).done(function(data) {
+                console.log(data)
+            }).fail(function( xhr, status, errorThrown ) {
+                alert("Failed to add to cart")
             })
         });
 
