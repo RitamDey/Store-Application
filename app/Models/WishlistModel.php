@@ -14,7 +14,11 @@ class WishlistModel extends Model {
         "updated_at"
     ];
     protected $fillable = [
+        "name",
         "description",
         "user_id"
     ];
+    protected $table = "wishlist";
+    protected $primaryKey = "id";
+
 }
