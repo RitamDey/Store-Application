@@ -45,10 +45,20 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <td class="border-0 align-middle"><strong>Rs {{ $product->get('price') }}</strong></td>
-                                    <td class="border-0 align-middle"><strong>{{ $product->get('quantity') }}</strong></td>
-                                    <td class="border-0 align-middle"><strong>{{ $product->get('item_total') }}</strong></td>
-                                    <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
+                                    <td class="border-0 align-middle">
+                                        <strong>Rs {{ $product->get('price') }}</strong>
+                                    </td>
+                                    <td class="border-0 align-middle">
+                                        <button><i class="fa fa-plus"></i></button>
+                                        <strong>{{ $product->get('quantity') }}</strong>
+                                        <button><i class="fa fa-minus"></i></button>
+                                    </td>
+                                    <td class="border-0 align-middle">
+                                        <strong>Rs {{ $product->get('item_total') }}</strong>
+                                    </td>
+                                    <td class="border-0 align-middle">
+                                        <a href="#" class="text-dark"><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 <tr>
