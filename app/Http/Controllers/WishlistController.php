@@ -21,7 +21,10 @@ class WishlistController extends Controller {
         $extract = function($item, $key) {
             $key = $item->id;
             $name = $item->name;
-            return "<option value=$key>$name</option>";
+            if ($item->default)
+                return "<option value=$key selected>$name</option>";
+            else
+                return "<option value=$key>$name</option>";
         };
         
         // Fetch all the wishlist, apply the function on everyone of them and then join them in a string
