@@ -78,7 +78,7 @@
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle">
-                                        <strong>Rs. {{ $total }}</strong>
+                                        <strong>Rs. <div id="total">{{ $total }}</div></strong>
                                     </td>
                                     <td class="border-0 align-middle">
                                         <a href="{{ @route('user.checkout') }}" class="btn btn-primary">
@@ -103,8 +103,15 @@
                 dataType: "json"
             }).done(function(data) {
                 if (data.status) {
+                    // The passed element is the remove button. It's grand parent is the table row
+                    // of the product in question. Navigate to it and remove it from DOM
                     let row = remove_btn.parentElement.parentElement
                     row.remove()
+                    // Get the current total and subtract the price as returned by the endpoint
+                    // and update the DOM to reflect the accurate price
+                    let total = parseFloat($("#total").text())
+                    total -= data.cost
+                    $("#total").text(total)
                 }
                 else {
                     alert("Can't remove item from cart")
