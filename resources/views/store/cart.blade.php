@@ -40,7 +40,9 @@
                                         <div class="p-2">
                                             <div class="ml-3 d-inline-block align-middle">
                                                 <h5 class="mb-0">
-                                                    <a href="{{ @route("store.product", $product->get("id")) }}" class="text-dark d-inline-block align-middle">{{ $product->get('name') }}</a>
+                                                    <a href="{{ @route("store.product", $product->get("id")) }}" class="text-dark d-inline-block align-middle">
+                                                        {{ $product->get('name') }}
+                                                    </a>
                                                 </h5>
                                             </div>
                                         </div>
@@ -49,9 +51,9 @@
                                         <strong>Rs {{ $product->get('price') }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <button><i class="fa fa-plus"></i></button>
-                                        <strong>{{ $product->get('quantity') }}</strong>
                                         <button><i class="fa fa-minus"></i></button>
+                                        <strong>{{ $product->get('quantity') }}</strong>
+                                        <button><i class="fa fa-plus"></i></button>
                                     </td>
                                     <td class="border-0 align-middle">
                                         <strong>Rs {{ $product->get('item_total') }}</strong>
@@ -73,8 +75,14 @@
                                     </th>
                                     <td class="border-0 align-middle"></td>
                                     <td class="border-0 align-middle"></td>
-                                    <td class="border-0 align-middle"><strong>{{ $total }}</strong></td>
-                                    <td class="border-0 align-middle"><a href="{{ @route('user.checkout') }}" class="btn btn-primary">Checkout</a></td>
+                                    <td class="border-0 align-middle">
+                                        <strong>Rs. {{ $total }}</strong>
+                                    </td>
+                                    <td class="border-0 align-middle">
+                                        <a href="{{ @route('user.checkout') }}" class="btn btn-primary">
+                                            Checkout
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
