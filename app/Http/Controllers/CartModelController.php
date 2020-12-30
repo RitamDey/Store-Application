@@ -61,11 +61,24 @@ class CartModelController extends Controller {
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Remove the specified product from user's cart.
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function remove(Request $request) {
+        $user = Auth::user()->id;
+        $validated = $request->validate($this->validation);
+        $product = intval($validated["product"]);
+
+        $status = CartModel::where("product_id", $product)->where("user_id", $user)->delete();
+
+        if ($status === 1) {
+            Log::debug("Removed Product $product from User $user cart");
+            return [ "status" => true ];
+        }
+        else {
+            Log::debug("Error removing Product $product from User $user cart");
+            return [ "status" => false ];
+        }
     }
 }
