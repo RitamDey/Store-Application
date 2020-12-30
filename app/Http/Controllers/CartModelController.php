@@ -70,11 +70,17 @@ class CartModelController extends Controller {
         $validated = $request->validate($this->validation);
         $product = intval($validated["product"]);
 
+        $products = CartModel::where("product_id", $product)->where("user_id", $user)->get();
+        
+        $total = $products->reduce(function (int $sum, CartModel $item) {
+            return $sum + ($item->quantity * $item->product->price);
+        }, 0);
+        
         $status = CartModel::where("product_id", $product)->where("user_id", $user)->delete();
 
         if ($status === 1) {
             Log::debug("Removed Product $product from User $user cart");
-            return [ "status" => true ];
+            return [ "status" => true, "cost" => $total ];
         }
         else {
             Log::debug("Error removing Product $product from User $user cart");
