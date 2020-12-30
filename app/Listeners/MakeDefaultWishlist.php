@@ -22,6 +22,7 @@ class MakeDefaultWishlist {
         $default = WishlistModel::create([
             "user_id" => $user,
             "name" => "default",
+            "default" => true,
             "description" => "Save your items to buy later"
         ]);
 
