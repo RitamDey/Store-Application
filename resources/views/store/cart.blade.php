@@ -59,7 +59,9 @@
                                         <strong>Rs {{ $product->get('item_total') }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <a href="#" class="text-dark"><i class="fa fa-trash"></i></a>
+                                        <button class="text-dark" onclick="remove(this, {{ $product->get("id") }})">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -90,8 +92,26 @@
                         <!-- End -->
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function remove(remove_btn, product) {
+            $.post({
+                url: "{{ @route("cart.remove") }}",
+                data: { "product": product },
+                dataType: "json"
+            }).done(function(data) {
+                if (data.status) {
+                    let row = remove_btn.parentElement.parentElement
+                    row.remove()
+                }
+                else {
+                    alert("Can't remove item from cart")
+                }
+            }).fail(function( xhr, status, errorThrown ) {
+                alert("Failed to remove from cart")
+            })
+        }
+    </script>
 @endsection
