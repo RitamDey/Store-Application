@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CartModelController extends Controller {
     
+    private $validation = [
+        "product" => "required|integer"
+    ];
+
     public function create(Request $request) {
         $user = Auth::user()->id;
-        $validated = $request->validate([
-            "product" => "required|integer"
-        ]);
+        $validated = $request->validate($this->validation);
         $product = intval($validated["product"]);
-        Log::debug("Adding $product for $user");
+        Log::debug("Adding Product $product to User $user cart");
 
         $item = CartModel::create([
             "product_id" => $product,
@@ -23,7 +25,8 @@ class CartModelController extends Controller {
             "quantity" => 1
         ]);
 
-        return $item->toJson();
+        return [ "status" => true ];
+
     }
 
     /**
