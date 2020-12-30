@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class CartModelController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create(Request $request) {
         $user = Auth::user()->id;
         $validated = $request->validate([
@@ -64,10 +60,9 @@ class CartModelController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CartModel  $cartModel
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CartModel $cartModel) {
-        //
+    public function remove(Request $request) {
     }
 }
