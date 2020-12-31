@@ -22,7 +22,7 @@ class BillController extends Controller {
         $current_user = Auth::user()->id;
 
         // Make sure that the bill that is requested belongs to the user first
-        $bill = Bill::find($bill_id)->where("user", $current_user);
+        $bill = Bill::where("id", $bill_id)->where("user", $current_user)->first();
         if ($bill === null) {
             return abort(404);
         } else {
