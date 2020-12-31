@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\StoreController;
+use \App\Http\Controllers\BillController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,18 +15,20 @@ use \App\Http\Controllers\StoreController;
 */
 
 Route::get("/", [StoreController::class, 'index'])->name("store.index");
-Route::get("/new-products", [StoreController::class, 'new_products'])->name("store.new_products");
-Route::get('/product/{id}', [StoreController::class, 'show'])
-     ->name("store.product")->whereNumber("id");
-Route::get("/my-cart", [StoreController::class, "cart_view"])
-     ->middleware("auth")->name("user.cart");
-Route::get("/checkout", [StoreController::class, "checkout_view"])
-     ->middleware("password.confirm")->name("user.checkout");
-Route::post("/checkout", [StoreController::class, "checkout_make"])
-     ->middleware("password.confirm")->name("user.checkout");
+Route::prefix("/prodcuts")->group(function() {
+    Route::get("/new", [StoreController::class, 'new_products'])->name("store.new_products");
+    Route::get('/{id}', [StoreController::class, 'show'])->name("store.product")->whereNumber("id");
+});
+Route::middleware("auth")->prefix("/user")->group(function() {
+    Route::get("/my-cart", [StoreController::class, "cart_view"])->name("user.cart");
+    Route::get("/checkout", [StoreController::class, "checkout_view"])
+         ->middleware("password.confirm")->name("user.checkout");
+    Route::post("/checkout", [StoreController::class, "checkout_make"])
+         ->middleware("password.confirm")->name("user.checkout");
+    Route::get('/dashboard', [BillController::class, "index"])->name('user.dashboard');
+    Route::get("/bill/{id}", [BillController::class, "details"])->name('user.bill')->whereNumber("id");
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard', ["products" => [], "total_item" => 0]);
-})->middleware(['auth'])->name('dashboard');
+Route::redirect("/dashboard", "/user/dashboard", 302);
 
 require __DIR__.'/auth.php';
