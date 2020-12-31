@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 
 class BillController extends Controller {
     public function index(Request $request) {
+        $user = Auth::user();
+
+        return view("dashboard", [ "bills" => $user->bills ]);
     }
 
     public function details(Request $request) {
