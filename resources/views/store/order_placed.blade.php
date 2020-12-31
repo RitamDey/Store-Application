@@ -11,7 +11,7 @@
     <hr>
     
     <p class="lead">
-        <a class="btn btn-primary btn-sm" href="{{ @route("dashboard") }}" role="button">
+        <a class="btn btn-primary btn-sm" href="{{ @route("user.dashboard") }}" role="button">
             Continue to dasboard
         </a>
     </p>

@@ -28,9 +28,6 @@
                                     <th scope="col" class="border-0 bg-light">
                                         <div class="py-2 text-uppercase">Total</div>
                                     </th>
-                                    <th scope="col" class="border-0 bg-light">
-                                        <div class="py-2 text-uppercase">Remove</div>
-                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +45,6 @@
                                     <td class="border-0 align-middle"><strong>Rs {{ $product->get("price") }}</strong></td>
                                     <td class="border-0 align-middle"><strong>{{ $product->get("quantity") }}</strong></td>
                                     <td class="border-0 align-middle"><strong>{{ $product->get("item_total") }}</strong></td>
-                                    <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 @endforeach
                                 <tr>

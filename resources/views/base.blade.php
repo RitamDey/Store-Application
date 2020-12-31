@@ -36,7 +36,7 @@
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
                         @auth
-                            <li><a href="{{ @route('dashboard') }}"
+                            <li><a href="{{ @route('user.dashboard') }}"
                                    class="text-white">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a></li>
                             <li><a href="{{ @route('user.cart') }}" class="text-white">View Cart</a></li>
                             <li><a href="#" class="text-white">View Wishlist</a></li>
