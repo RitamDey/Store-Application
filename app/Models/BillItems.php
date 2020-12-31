@@ -24,4 +24,13 @@ class BillItems extends Model {
     public function bill() {
         return $this->belongsTo(Bill::class, "bill_id", "id");
     }
+
+    /**
+     * Denotes the relation b/w Products model and Bill model
+     * Using this method, a caller can get the product linked with this bill item
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    **/
+    public function product() {
+        return $this->belongsTo(Products::class, "product_id", "id");
+    }
 }
