@@ -149,9 +149,23 @@
         }
 
         function increase(add_btn, product) {
-            let grandparent = add_btn.parentElement.parentElement
-            let price_element = grandparent.querySelector(".price")
-            console.log(product)
+            $.post({
+                url: "{{ @route("cart.increase") }}",
+                data: { "product": product },
+                dataType: "json"
+            }).done(function(data) {
+                if (data.status) {
+                    update_row(add_btn, data.price, false)
+                    let total = parseFloat($("#total").text())
+                    total += data.price
+                    $("#total").text(total)
+                }
+                else {
+                    alert("Can't increase quantity")
+                }
+            }).fail(function(xhr, status, errorThrown) {
+                alert("Failed to increase quantity")
+            })
         }
     </script>
 @endsection
