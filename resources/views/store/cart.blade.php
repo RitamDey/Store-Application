@@ -51,15 +51,21 @@
                                         <strong>Rs {{ $product->get('price') }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <button><i class="fa fa-minus"></i></button>
+                                        <button onclick="decrease(this, {{ $product->get("id") }}, true)">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
                                         <strong>{{ $product->get('quantity') }}</strong>
-                                        <button><i class="fa fa-plus"></i></button>
+                                        <button onclick="increase(this, {{ $product->get("id") }})">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <strong>Rs {{ $product->get('item_total') }}</strong>
+                                        <strong>Rs 
+                                            <div class="price">{{ $product->get('item_total') }}</div>
+                                        </strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <button class="text-dark" onclick="remove(this, {{ $product->get("id") }})">
+                                        <button onclick="remove(this, {{ $product->get("id") }})">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
@@ -95,6 +101,7 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="/js/cart.js"></script>
     <script type="text/javascript">
         function remove(remove_btn, product) {
             $.post({
@@ -119,6 +126,32 @@
             }).fail(function( xhr, status, errorThrown ) {
                 alert("Failed to remove from cart")
             })
+        }
+
+        function decrease(minus_btn, product) {
+            $.post({
+                url: "{{ @route("cart.decrease") }}",
+                data: { "product": product },
+                dataType: "json"
+            }).done(function(data) {
+                if (data.status) {
+                    update_row(minus_btn, data.price, true)
+                    let total = parseFloat($("#total").text())
+                    total -= data.price
+                    $("#total").text(total)
+                }
+                else {
+                    alert("Can't to decrease quantity")
+                }
+            }).fail(function( xhr, status, errorThrown ) {
+                alert("Failed to remove from cart")
+            })
+        }
+
+        function increase(add_btn, product) {
+            let grandparent = add_btn.parentElement.parentElement
+            let price_element = grandparent.querySelector(".price")
+            console.log(product)
         }
     </script>
 @endsection
