@@ -23,4 +23,9 @@ function update_row(btn_element, product_price, decrease) {
     else
         quantity++;
     quantity_element.innerText = quantity;
+
+    if (quantity < 1) {
+        let trash_icon = parent.parentElement.querySelector(".fa-trash");
+        trash_icon.parentElement.click()
+    }
 }
