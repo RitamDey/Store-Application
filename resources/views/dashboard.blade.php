@@ -57,7 +57,9 @@
                                         <strong>{{ $bill->created_at->diffForHumans() }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <a href="#" class="btn btn-primary">Details</a>
+                                        <a href="{{ @route("user.bill", $bill->id) }}" class="btn btn-primary">
+                                            Details
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

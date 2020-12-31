@@ -18,6 +18,16 @@ class BillController extends Controller {
         return view("dashboard", [ "bills" => $user->bills ]);
     }
 
-    public function details(Request $request) {
+    public function details(int $bill_id) {
+        $current_user = Auth::user()->id;
+
+        // Make sure that the bill that is requested belongs to the user first
+        $bill = Bill::find($bill_id)->where("user", $current_user);
+        if ($bill === null) {
+
+        } else {
+            $items = $bill->first()->items;
+            return $items->toArray();
+        }
     }
 }
