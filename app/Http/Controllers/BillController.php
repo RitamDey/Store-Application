@@ -24,10 +24,24 @@ class BillController extends Controller {
         // Make sure that the bill that is requested belongs to the user first
         $bill = Bill::find($bill_id)->where("user", $current_user);
         if ($bill === null) {
-
+            return abort(404);
         } else {
-            $items = $bill->first()->items;
-            return $items->toArray();
+            $bill_items = $bill->items;
+            $bill_info = collect();
+
+            foreach ($bill_items as $bill_item) {
+                $product = collect([
+                    "id" => $bill_item->product_id,
+                    "name" => $bill_item->product->name,
+                    "price" => $bill_item->product->price,
+                    "quantity" => $bill_item->quantity,
+                    "item_total" => $bill_item->quantity * $bill_item->product->price
+                ]);
+                $bill_info->push($product);
+            }
+            return view("store.bill_view", [ 
+                "items" => $bill_info, "total" => $bill->total_cost, "total_items" => $bill->total_items
+            ]);
         }
     }
 }
