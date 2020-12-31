@@ -21,6 +21,9 @@ class Bill extends Model {
         "total_cost",
         "total_items"
     ];
+    protected $dates = [
+        "created_at"
+    ];
     protected $primaryKey = "id";
     protected $table = "bills";
     public $timestamps = false;
