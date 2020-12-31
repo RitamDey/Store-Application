@@ -29,24 +29,33 @@ class CartModelController extends Controller {
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
-        //
+    private function modify_cart(Request $request, int $by) {
+        $user = Auth::user()->id;
+        $validated = $request->validate($this->validation);
+        $product = intval($validated["product"]);
+        $item = CartModel::where("product_id", $product)->where("user_id", $user)->first();
+
+        if ($item === null)
+            return [ "status" => false ];
+
+        $status = CartModel::where("product_id", $product)->where("user_id", $user)->update([
+            "quantity" => $item->quantity + $by
+        ]);
+
+        if ($status === 1) {
+            Log::debug("[User $user] Updated user cart quantity");
+            return [ "status" => true, "price" => $item->product->price ];
+        }
+        
+        return [ "status" => false ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CartModel  $cartModel
-     * @return \Illuminate\Http\Response
-     */
-    public function show(CartModel $cartModel) {
-        //
+    public function increase(Request $request) {
+        return $this->modify_cart($request, 1);
+    }
+
+    public function decrease(Request $request) {
+        return $this->modify_cart($request, -1);
     }
 
     /**
@@ -60,11 +69,6 @@ class CartModelController extends Controller {
         //
     }
 
-    /**
-     * Remove the specified product from user's cart.
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function remove(Request $request) {
         $user = Auth::user()->id;
         $validated = $request->validate($this->validation);

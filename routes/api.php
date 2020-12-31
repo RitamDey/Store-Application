@@ -34,4 +34,6 @@ Route::middleware('auth')->prefix("/wishlist")->group(function() {
 Route::middleware('auth')->prefix("/cart")->group(function() {
     Route::post("/add", [CartModelController::class, "create"])->name("cart.add");
     Route::post("/remove", [CartModelController::class, "remove"])->name("cart.remove");
+    Route::post("/increase", [CartModelController::class, "increase"])->name("cart.increase");
+    Route::post("/decrease", [CartModelController::class, "decrease"])->name("cart.decrease");
 });
