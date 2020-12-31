@@ -141,10 +141,10 @@
                     $("#total").text(total)
                 }
                 else {
-                    alert("Can't to decrease quantity")
+                    alert("Can't decrease quantity")
                 }
             }).fail(function( xhr, status, errorThrown ) {
-                alert("Failed to remove from cart")
+                alert("Failed to decrease quantity")
             })
         }
 
