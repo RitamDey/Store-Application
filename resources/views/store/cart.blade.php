@@ -119,6 +119,11 @@
                     let total = parseFloat($("#total").text())
                     total -= data.cost
                     $("#total").text(total)
+
+                    // When the cart value reaches 0, reload the entire window.
+                    // This will ensure that the empty cart UI is displayed
+                    if (total <= 0)
+                        window.location.reload()
                 }
                 else {
                     alert("Can't remove item from cart")
