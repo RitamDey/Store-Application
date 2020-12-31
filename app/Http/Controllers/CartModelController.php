@@ -58,17 +58,6 @@ class CartModelController extends Controller {
         return $this->modify_cart($request, -1);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CartModel  $cartModel
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, CartModel $cartModel) {
-        //
-    }
-
     public function remove(Request $request) {
         $user = Auth::user()->id;
         $validated = $request->validate($this->validation);
