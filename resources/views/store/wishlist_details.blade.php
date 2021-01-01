@@ -73,10 +73,13 @@ body {
     </div>
 </div>
 <script type="text/javascript">
-    function remove(remove_btn, product) {
+    function remove(remove_btn, product, wishlist) {
         $.post({
-            url: "{{ @route("cart.remove") }}",
-            data: { "product": product },
+            url: "{{ @route("user.remove_from_wishlist") }}",
+            data: {
+                "item": product,
+                "wishlist": wishlist
+            },
             dataType: "json"
         }).done(function(data) {
             if (data.status) {
@@ -84,42 +87,13 @@ body {
                 // of the product in question. Navigate to it and remove it from DOM
                 let row = remove_btn.parentElement.parentElement
                 row.remove()
-                // Get the current total and subtract the price as returned by the endpoint
-                // and update the DOM to reflect the accurate price
-                let total = parseFloat($("#total").text())
-                total -= data.cost
-                $("#total").text(total)
-
-                // When the cart value reaches 0, reload the entire window.
-                // This will ensure that the empty cart UI is displayed
-                if (total <= 0)
-                    window.location.reload()
+                alert("Product successfully removed from wishlist")
             }
             else {
-                alert("Can't remove item from cart")
+                alert("Can't remove item from wishlist")
             }
         }).fail(function( xhr, status, errorThrown ) {
-            alert("Failed to remove from cart")
-        })
-    }
-
-    function decrease(minus_btn, product) {
-        $.post({
-            url: "{{ @route("cart.decrease") }}",
-            data: { "product": product },
-            dataType: "json"
-        }).done(function(data) {
-            if (data.status) {
-                update_row(minus_btn, data.price, true)
-                let total = parseFloat($("#total").text())
-                total -= data.price
-                $("#total").text(total)
-            }
-            else {
-                alert("Can't decrease quantity")
-            }
-        }).fail(function( xhr, status, errorThrown ) {
-            alert("Failed to decrease quantity")
+            alert("Failed to remove from wishlist")
         })
     }
 
