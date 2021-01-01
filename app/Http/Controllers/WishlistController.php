@@ -108,11 +108,15 @@ class WishlistController extends Controller {
 
     public function create(Request $request) {
         $user = Auth::user();
-
         $validation = [
             "name" => "required|string"
         ];
         $validated = $request->validate($validation);
+
+        $exists = WishlistModel::where("user_id", $user->id)->where("name", $validated["name"])->exists();
+        if ($exists) {
+            return [ "status" => false, "message" => "Wishlist with same name already exists "];
+        }
         $status = WishlistModel::create([
             "name" => $validated["name"],
             "user_id" => $user->id

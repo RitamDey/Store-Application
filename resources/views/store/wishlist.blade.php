@@ -95,6 +95,8 @@
                     </tr>
                     `
                     $("tbody").append(new_block)
+                } else {
+                    bootbox.alert(data.message)
                 }
             }).fail(function(xhr, status, errorType) {
             })
