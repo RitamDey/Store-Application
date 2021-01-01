@@ -43,8 +43,10 @@
                                         <strong>{{ $wishlist->updated_at->diffForHumans() }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <a href="#" class="btn btn-primary">
-                                            Details
+                                        <a 
+                                            href="{{ @route("wishlist.details", $wishlist->id) }}"
+                                            class="btn btn-primary"
+                                        >Details
                                         </a>
                                     </td>
                                 </tr>
@@ -58,4 +60,9 @@
         </div>
     </div>
 </div>
+{{-- <div class="container">
+    <p class="float-end mb-1">
+        <button href="#" class="btn btn-primary">Create a new wishlist</button>
+    </p>
+</div> --}}
 @endsection

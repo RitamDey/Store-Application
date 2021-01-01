@@ -31,6 +31,7 @@ Route::middleware("auth")->prefix("/user")->group(function() {
 });
 Route::middleware("auth")->prefix("/wishlist")->group(function() {
     Route::get("/", [UserWishlist::class, "index"])->name("wishlist.index");
+    Route::get("/{id}", [UserWishlist::class, "get"])->name("wishlist.details")->whereNumber("id");
 });
 
 Route::redirect("/dashboard", "/user/dashboard", 302);
