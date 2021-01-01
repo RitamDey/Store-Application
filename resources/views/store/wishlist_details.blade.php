@@ -25,47 +25,39 @@ body {
                                 <th scope="col" class="border-0 bg-light">
                                     <div class="py-2 text-uppercase">Quantity</div>
                                 </th>
-                                <th scope="col" class="border-0 bg-light">
-                                    <div class="py-2 text-uppercase">Total</div>
-                                </th>
-                                <th scope="col" class="border-0 bg-light">
-                                    <div class="py-2 text-uppercase">Remove</div>
-                                </th>
+                                <th scope="col" class="border-0 bg-light"></th>
+                                <th scope="col" class="border-0 bg-light"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($items as $item)
                             <tr>
                                 <th scope="row" class="border-0">
                                     <div class="p-2">
                                         <div class="ml-3 d-inline-block align-middle">
                                             <h5 class="mb-0">
-                                                <a href="{{ @route("store.product", $product->get("id")) }}" class="text-dark d-inline-block align-middle">
-                                                    {{ $product->get('name') }}
+                                                <a href="{{ @route("store.product", $item->product-id) }}" class="text-dark d-inline-block align-middle">
+                                                    {{ $item->product->name }}
                                                 </a>
                                             </h5>
                                         </div>
                                     </div>
                                 </th>
                                 <td class="border-0 align-middle">
-                                    <strong>Rs {{ $product->get('price') }}</strong>
+                                    <strong>
+                                        Rs {{ $item->product->price }}
+                                    </strong>
                                 </td>
                                 <td class="border-0 align-middle">
-                                    <button onclick="decrease(this, {{ $product->get("id") }}, true)">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <strong>{{ $product->get('quantity') }}</strong>
-                                    <button onclick="increase(this, {{ $product->get("id") }})">
+                                    <strong>{{ $item->added_at->diffForHumans() }}</strong>
+                                </td>
+                                <td class="border-0 align-middle">
+                                    <button onclick="cart(this, {{ $item->product->id }})">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
                                 <td class="border-0 align-middle">
-                                    <strong>Rs 
-                                        <div class="price">{{ $product->get('item_total') }}</div>
-                                    </strong>
-                                </td>
-                                <td class="border-0 align-middle">
-                                    <button onclick="remove(this, {{ $product->get("id") }})">
+                                    <button onclick="remove(this, {{ $this->product->id }})">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
@@ -80,7 +72,6 @@ body {
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/cart.js"></script>
 <script type="text/javascript">
     function remove(remove_btn, product) {
         $.post({

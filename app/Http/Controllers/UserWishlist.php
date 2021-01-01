@@ -13,11 +13,14 @@ class UserWishlist extends Controller {
         return view("store.wishlist", [ "wishlists" => $user->wishlists ]);
     }
 
+    public function create() {
+    }
+
     public function get(int $id) {
         $user = Auth::user()->id;
 
         $wishlist = WishlistModel::where("user_id", $user)->where("id", $id)->first();
 
-        return view("store.wishlist_details", [ "products" => $wishlist->items ]);
+        return view("store.wishlist_details", [ "items" => $wishlist->items ]);
     }
 }
