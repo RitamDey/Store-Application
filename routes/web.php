@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\StoreController;
 use \App\Http\Controllers\BillController;
-use \App\Http\Controllers\UserWishlist;
+use \App\Http\Controllers\WishlistController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,8 +30,8 @@ Route::middleware("auth")->prefix("/user")->group(function() {
     Route::get("/bill/{id}", [BillController::class, "details"])->name('user.bill')->whereNumber("id");
 });
 Route::middleware("auth")->prefix("/wishlist")->group(function() {
-    Route::get("/", [UserWishlist::class, "index"])->name("wishlist.index");
-    Route::get("/{id}", [UserWishlist::class, "get"])->name("wishlist.details")->whereNumber("id");
+    Route::get("/", [WishlistController::class, "show"])->name("wishlist.index");
+    Route::get("/{id}", [WishlistController::class, "get"])->name("wishlist.details")->whereNumber("id");
 });
 
 Route::redirect("/dashboard", "/user/dashboard", 302);

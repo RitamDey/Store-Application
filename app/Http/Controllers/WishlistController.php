@@ -8,11 +8,6 @@ use App\Models\WishlistModel;
 use App\Models\WishlistItemsModel;
 
 class WishlistController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index() {
         $user = Auth::user();
 
@@ -54,15 +49,18 @@ class WishlistController extends Controller {
         return [ "status" => true ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function show() {
+        $user = Auth::user();
+
+        return view("store.wishlist", [ "wishlists" => $user->wishlists ]);
+    }
+
+    public function get(int $id) {
+        $user = Auth::user()->id;
+
+        $wishlist = WishlistModel::where("user_id", $user)->where("id", $id)->first();
+
+        return view("store.wishlist_details", [ "items" => $wishlist->items ]);
     }
 
     /**
