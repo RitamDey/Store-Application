@@ -70,10 +70,16 @@ class WishlistController extends Controller {
 
     public function get(int $id) {
         $user = Auth::user()->id;
-
         $wishlist = WishlistModel::where("user_id", $user)->where("id", $id)->first();
 
-        return view("store.wishlist_details", [ "items" => $wishlist->items, "wishlist" => $id ]);
+        if ($wishlist === null)
+            return abort(404);
+        $items = $wishlist->items;
+
+        if ($items->isEmpty())
+            return view("store.empty_wishlist");
+
+        return view("store.wishlist_details", [ "items" => $items, "wishlist" => $id ]);
     }
 
     public function update(Request $request) {
