@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\WishlistModel;
 use App\Models\WishlistItemsModel;
+use App\Models\CartModel;
 
 class WishlistController extends Controller {
     public function index() {
@@ -75,16 +76,27 @@ class WishlistController extends Controller {
         return view("store.wishlist_details", [ "items" => $wishlist->items, "wishlist" => $id ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request) {
+        $user = Auth::user()->id;
+
+        $validation = [
+            "item" => "required|numeric|exists:App\Models\Products,id"
+        ];
+        $validated = $request->validate($validation);
+        $exists = CartModel::where("product_id", $validated["item"])
+                           ->where("user_id", $user)->exists();
+        if ($exists)
+            return [ "status" => false, "message" => "Item already in cart"];
+
+        $status = CartModel::create([
+            "product_id" => $validated["item"],
+            "user_id" => $user
+        ]);
+
+        if ($status === null)
+            return [ "status" => false, "message" => "Database error. Can't add to cart"];
+
+        return [ "status" => true ];
     }
 
     /**

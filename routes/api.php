@@ -20,6 +20,7 @@ Route::middleware('auth')->prefix("/wishlist")->group(function() {
     Route::get("/get", [WishlistController::class, "index"])->name("user.wishlists");
     Route::post("/add", [WishlistController::class, "store"])->name("user.add_to_wishlist");
     Route::post("/remove", [WishlistController::class, "remove"])->name("user.remove_from_wishlist");
+    Route::post("/add-to-cart", [WishlistController::class, "update"])->name("user.add_to_cart");
 });
 
 
