@@ -18,6 +18,9 @@ class WishlistItemsModel extends Model {
     protected $guarded = [
         "added_at"
     ];
+    protected $dates = [
+        "added_at"
+    ];
     public $timestamps = false;
     protected $table = "wishlist_items";
 
@@ -29,5 +32,14 @@ class WishlistItemsModel extends Model {
     **/
     public function wishlist() {
         return $this->belongsTo(WishlistModel::class, "wishlist_id", "id");
+    }
+
+    /**
+     * Denotes the relation b/w WishlistItems model and Products model
+     * Using this method, a caller can get the product which is present in this entry
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    **/
+    public function product() {
+        return $this->belongsTo(Products::class, "product_id", "id");
     }
 }
