@@ -43,10 +43,9 @@
                                         <strong>{{ $wishlist->updated_at->diffForHumans() }}</strong>
                                     </td>
                                     <td class="border-0 align-middle">
-                                        <a 
-                                            href="{{ @route("wishlist.details", $wishlist->id) }}"
-                                            class="btn btn-primary"
-                                        >Details
+                                        <a href="{{ @route("wishlist.details", $wishlist->id) }}"
+                                            class="btn btn-primary">
+                                            Details
                                         </a>
                                     </td>
                                 </tr>
@@ -60,9 +59,46 @@
         </div>
     </div>
 </div>
-{{-- <div class="container">
+<div class="container">
     <p class="float-end mb-1">
-        <button href="#" class="btn btn-primary">Create a new wishlist</button>
+        <button onclick="create()" class="btn btn-primary">Create a new wishlist</button>
     </p>
-</div> --}}
+</div>
+<script type="text/javascript">
+    function create() {
+        bootbox.prompt("What do you want to name?", function(data) {
+            $.post({
+                url: "{{ @route("user.create_wishlist") }}",
+                data: { name: data },
+                dataType: "json"
+            }).done(function(data) {
+                if (data.status) {
+                    item = data.item
+                    new_block = `
+                    <tr>
+                        <td scope="row" class="border-0">
+                            <div class="p-2">
+                                <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0">${ data.name }</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="border-0 align-middle">
+                            <strong>Just now</strong>
+                        </td>
+                        <td class="border-0 align-middle">
+                            <a href="/wishlist/${ data.id }"
+                                class="btn btn-primary">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                    `
+                    $("tbody").append(new_block)
+                }
+            }).fail(function(xhr, status, errorType) {
+            })
+        })
+    }
+</script>
 @endsection

@@ -105,14 +105,19 @@ class WishlistController extends Controller {
         return [ "status" => true ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+
+    public function create(Request $request) {
+        $user = Auth::user();
+
+        $validation = [
+            "name" => "required|string"
+        ];
+        $validated = $request->validate($validation);
+        $status = WishlistModel::create([
+            "name" => $validated["name"],
+            "user_id" => $user->id
+        ]);
+
+        return [ "status" => $status !== null, "name" => $status->name, "id" => $status->id ];
     }
 }
