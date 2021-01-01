@@ -19,6 +19,7 @@ class WishlistItemsModel extends Model {
         "added_at"
     ];
     public $timestamps = false;
+    protected $table = "wishlist_items";
 
 
     /**
