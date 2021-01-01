@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\StoreController;
 use \App\Http\Controllers\BillController;
+use \App\Http\Controllers\UserWishlist;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,9 @@ Route::middleware("auth")->prefix("/user")->group(function() {
          ->middleware("password.confirm")->name("user.checkout");
     Route::get('/dashboard', [BillController::class, "index"])->name('user.dashboard');
     Route::get("/bill/{id}", [BillController::class, "details"])->name('user.bill')->whereNumber("id");
+});
+Route::middleware("auth")->prefix("/wishlist")->group(function() {
+    Route::get("/", [UserWishlist::class, "index"])->name("wishlist.index");
 });
 
 Route::redirect("/dashboard", "/user/dashboard", 302);
