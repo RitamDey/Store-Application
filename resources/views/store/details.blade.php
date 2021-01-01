@@ -49,10 +49,21 @@
             event.preventDefault();
             // Get the selected wishlist
             let wishlist = $("#wishlist option:selected").val()
-            console.log(wishlist)
             // Get the product id
             let item = $("#wishlist-form > input:hidden").val()
-            console.log(item)
+
+            $.post({
+                url: "{{ @route("user.add_to_wishlist") }}",
+                data: { "item": item, "wishlist": wishlist },
+                dataType: "json"
+            }).done(function(data) {
+                if (!data.status)
+                    alert(data.message)
+                else
+                    alert("Added to wishlist")
+            }).fail(function(xhr, status, errorThrown) {
+                alert("Failed to add to wishlist")
+            })
         });
 
         {{--
