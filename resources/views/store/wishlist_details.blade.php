@@ -36,7 +36,7 @@ body {
                                     <div class="p-2">
                                         <div class="ml-3 d-inline-block align-middle">
                                             <h5 class="mb-0">
-                                                <a href="{{ @route("store.product", $item->product-id) }}" class="text-dark d-inline-block align-middle">
+                                                <a href="{{ @route("store.product", $item->product->id) }}" class="text-dark d-inline-block align-middle">
                                                     {{ $item->product->name }}
                                                 </a>
                                             </h5>
