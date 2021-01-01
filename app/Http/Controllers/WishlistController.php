@@ -72,7 +72,7 @@ class WishlistController extends Controller {
 
         $wishlist = WishlistModel::where("user_id", $user)->where("id", $id)->first();
 
-        return view("store.wishlist_details", [ "items" => $wishlist->items ]);
+        return view("store.wishlist_details", [ "items" => $wishlist->items, "wishlist" => $id ]);
     }
 
     /**

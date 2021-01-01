@@ -52,12 +52,12 @@ body {
                                     <strong>{{ $item->added_at->diffForHumans() }}</strong>
                                 </td>
                                 <td class="border-0 align-middle">
-                                    <button onclick="cart(this, {{ $item->product->id }})">
+                                    <button onclick="cart(this, {{ $item->product->id }}, {{ $wishlist }})">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
                                 <td class="border-0 align-middle">
-                                    <button onclick="remove(this, {{ $item->product->id }})">
+                                    <button onclick="remove(this,{{ $item->product->id }},{{ $wishlist }})">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
