@@ -49,6 +49,18 @@ class WishlistController extends Controller {
         return [ "status" => true ];
     }
 
+    public function remove(Request $request) {
+        $validation = [
+            "wishlist" => "required|numeric|exists:App\Models\WishlistModel,id",
+            "item" => "required|numeric|exists:App\Models\Products,id"
+        ];
+        $validated = $request->validate($validation);
+        $status = WishlistItemsModel::where("wishlist_id", $validated["wishlist"])
+                  ->where("product_id", $validated["item"])->delete();
+
+        return [ "status" => $status === 1 ];
+    }
+
     public function show() {
         $user = Auth::user();
 
