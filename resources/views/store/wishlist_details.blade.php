@@ -97,23 +97,25 @@ body {
         })
     }
 
-    function increase(add_btn, product) {
+    function cart(cart_btn, product, wishlist) {
         $.post({
-            url: "{{ @route("cart.increase") }}",
-            data: { "product": product },
+            url: "{{ @route("user.add_to_cart") }}",
+            data: {
+                "item": product,
+                "wishlist": wishlist
+            },
             dataType: "json"
         }).done(function(data) {
             if (data.status) {
-                update_row(add_btn, data.price, false)
-                let total = parseFloat($("#total").text())
-                total += data.price
-                $("#total").text(total)
+                let next = $(cart_btn.parentElement).next()
+                let btn = next.children()[0]
+                btn.click()
+                alert("Added the item to cart")
             }
-            else {
-                alert("Can't increase quantity")
-            }
+            else
+                alert(data.message)
         }).fail(function(xhr, status, errorThrown) {
-            alert("Failed to increase quantity")
+            alert("Failed to add to cart")
         })
     }
 </script>
