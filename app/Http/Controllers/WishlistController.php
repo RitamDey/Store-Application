@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\WishlistModel;
+use App\Models\WishlistItemsModel;
 
 class WishlistController extends Controller {
     /**
@@ -31,15 +33,25 @@ class WishlistController extends Controller {
         return $user->wishlists->map($extract)->join("\n");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $validation = [
+            "wishlist" => "required|numeric|exists:App\Models\WishlistModel,id",
+            "item" => "required|numeric|exists:App\Models\Products,id"
+        ];
+        $validated = $request->validate($validation);
+        $exists = WishlistItemsModel::where("wishlist_id", $validated["wishlist"])
+                  ->where("product_id", $validated["item"])->exists();
+
+        if ($exists) {
+            return [ "status" => false, "message" => "Product already in wishlist" ];
+        }
+
+        $status = WishlistItemsModel::create([
+            "wishlist_id" => $validated["wishlist"],
+            "product_id" => $validated["item"]
+        ]);
+        
+        return [ "status" => true ];
     }
 
     /**
