@@ -106,5 +106,23 @@
             })
         })
     }
+
+    function remove(remove_btn, wishlist) {
+        $.post({
+                url: "{{ @route("user.delete_wishlist") }}",
+                data: { id: wishlist },
+                dataType: "json"
+            }).done(function(data) {
+                console.log(data)
+                if (data.status) {
+                    let grandparent = remove_btn.parentElement.parentElement;
+                    grandparent.remove()
+                    alert("Wishlist deleted")
+                } else {
+                    alert(data.message)
+                }
+            }).fail(function(xhr, status, errorType) {
+            })
+    }
 </script>
 @endsection
