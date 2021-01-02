@@ -105,6 +105,20 @@ class WishlistController extends Controller {
         return [ "status" => true ];
     }
 
+    public function destroy(Request $request) {
+        $user = Auth::user();
+        $wishlists = $user->wishlists;
+        $wishlist = $user->wishlists->firstWhere("id", $request->id);
+
+        if ($wishlist->default)
+            return [ "status" => false, "message" => "Can't delete the default wishlist" ];
+
+        $status = $wishlist->delete();
+        if ($status)
+            return [ "status" => true ];
+
+        return [ "status" => false, "message" => "Database error" ];
+    }
 
     public function create(Request $request) {
         $user = Auth::user();
