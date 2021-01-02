@@ -16,4 +16,15 @@ class Products extends Model {
     protected $casts = [
         'price' => 'float'
     ];
+    protected $guarded = [
+        "id",
+        "created_at",
+        "updated_at"
+    ];
+    protected $fillable = [
+        "name",
+        "description",
+        "price",
+        "url"
+    ];
 }
