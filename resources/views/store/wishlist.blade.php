@@ -47,6 +47,10 @@
                                             class="btn btn-primary">
                                             Details
                                         </a>
+                                        <button onclick="remove(this, {{ $wishlist->id }})"
+                                            class="btn btn-danger">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
