@@ -25,6 +25,10 @@ class AddProduct extends Command {
         $contents = file_get_contents($file);
         $this->info("Read the file");
         $json = json_decode($contents);
+        $this->info("Decoded the JSON");
+        $bar = $this->output->createProgressBar(count($json));
+        $this->info("Adding Products to database");
+        $count = 0;
 
         foreach ($json as $key => $value) {
             if ((property_exists($value, "name") === false)||(property_exists($value, "price") === false)) {
@@ -42,10 +46,12 @@ class AddProduct extends Command {
                 "url" => $value->url,
                 "price" => $value->price
             ]);
-
-            $this->info($record->toJson());
+            $bar->advance();
+            $count++;
+            // $this->info("$record->name added with ID $record->id");
         }
-
+        $this->info("\nImported $count products to database");
+        
         return 0;
     }
 }
